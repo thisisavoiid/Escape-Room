@@ -1,50 +1,15 @@
-﻿using Microsoft.VisualBasic.FileIO;
-using System;
-using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Reflection;
-using System.Reflection.Emit;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-
-namespace Escape_Room
+﻿namespace Escape_Room
 {
     class Program
     {
 
         static string titleicon = $" _______  _______  _______  _______  _______  _______    ______    _______  _______  __   __ \r\n|       ||       ||       ||   _   ||       ||       |  |    _ |  |       ||       ||  |_|  |\r\n|    ___||  _____||       ||  |_|  ||    _  ||    ___|  |   | ||  |   _   ||   _   ||       |\r\n|   |___ | |_____ |       ||       ||   |_| ||   |___   |   |_||_ |  | |  ||  | |  ||       |\r\n|    ___||_____  ||      _||       ||    ___||    ___|  |    __  ||  |_|  ||  |_|  ||       |\r\n|   |___  _____| ||     |_ |   _   ||   |    |   |___   |   |  | ||       ||       || ||_|| |\r\n|_______||_______||_______||__| |__||___|    |_______|  |___|  |_||_______||_______||_|   |_|\n";
 
-        struct Sprite
-        {
-            public char Character;
-            public ConsoleColor ForegroundColor;
-            public ConsoleColor BackgroundColor;
-
-            public Sprite(char character, ConsoleColor fgcolor, ConsoleColor bgcolor)
-            {
-                this.Character = character;
-                this.ForegroundColor = fgcolor;
-                this.BackgroundColor = bgcolor;
-            }
-            public void SetColors() // Setzt die Konsolenfarben auf die übergebenen Farben dieser Sprite
-
-            {
-                Console.ForegroundColor = this.ForegroundColor;
-                Console.BackgroundColor = this.BackgroundColor;
-            }
-        }
-
-        struct Position
-        {
-            public int X;
-            public int Y;
-        }
-
-        public static int mapHeight;
-        public static int mapWidth;
-        public static int currentLevel = 0;
-        public static int gameMode = 0; // 0 = Custom Modus, 1 = Level-basierter Modus
-        public static int moveCounter = 0;
+        static int mapHeight;
+        static int mapWidth;
+        static int currentLevel = 0;
+        static int gameMode = 0; // 0 = Custom Modus, 1 = Level-basierter Modus
+        static int moveCounter = 0;
 
         static Sprite player = new Sprite(' ', ConsoleColor.White, ConsoleColor.Blue);
         static Sprite ground = new Sprite(' ', ConsoleColor.White, ConsoleColor.Gray);
@@ -52,9 +17,9 @@ namespace Escape_Room
         static Sprite key = new Sprite(' ', ConsoleColor.White, ConsoleColor.Yellow);
         static Sprite door = new Sprite(' ', ConsoleColor.White, ConsoleColor.Magenta);
 
-        public static char[,] mapChars;
+        static char[,] mapChars;
 
-        public static char[,,] levelMapChars = new char[5, 15, 15]
+        static char[,,] levelMapChars = new char[5, 15, 15]
         {
             // LEVEL 1
             {
