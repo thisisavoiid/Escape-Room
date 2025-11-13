@@ -114,14 +114,14 @@
             { 'W', 'G', 'W', 'G', 'W', 'W', 'W', 'G', 'W', 'G', 'W', 'G', 'W', 'W', 'W' },
             { 'W', 'P', 'G', 'G', 'G', 'G', 'G', 'G', 'W', 'G', 'G', 'G', 'G', 'G', 'W' },
             { 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W' },
-            },
+            }, 
 
         };
 
         static Position playerPos;
         static Position keyPos;
         static Position doorPos;
-
+        static int test;
         static bool hasGameStarted = false;
         static bool hasPlayerFoundKey = false;
 
