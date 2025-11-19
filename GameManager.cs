@@ -13,6 +13,7 @@ namespace Escape_Room
             SpriteManager.CreateAllGameSprites();
             Map.Initialize();
 
+            Console.WriteLine("Game setup has been finished.");
         }
 
     }
