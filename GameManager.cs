@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Escape_Room
 {
@@ -19,11 +20,12 @@ namespace Escape_Room
         private static E_GameMode _selectedGameMode;
 
         private static bool _isGameFinished = false;
-        private static bool _hasPlayerFoundKeyInCurrentLevel = false;
+        public static bool hasPlayerFoundKeyInCurrentLevel { get; private set; } = false;
         private static int _currentLevel = 0;
         private static int _levelCount = 0;
 
         private static Player _player = SpriteManager.GetPlayer();
+
 
         private static void StartCustomLevelSetupFlow()
         {
@@ -155,15 +157,20 @@ namespace Escape_Room
         /// </summary>
         public static void StartGameLoop()
         {
+            GUIManager.SetInfoDialogBar("Find the key!");
+
             while (!_isGameFinished)
             {
+                GUIManager.DrawGUI();
                 _player.Move(InputManager.GetMoveDirection(InputManager.GetKeyPressed()));
+
             }
         }
 
         private static void StartEndGameFlow()
         {
             _player.DisableMovement();
+            GUIManager.SetInfoDialogBar("You managed to escape! Congrats!");
         }
 
         /// <summary>
@@ -188,6 +195,7 @@ namespace Escape_Room
             _isGameFinished = false;
             _player.EnableMovement();
 
+            GUIManager.DrawGUI();
             StartGameLoop();
         }
 
@@ -197,7 +205,8 @@ namespace Escape_Room
         public static void CollectKeyInCurrentLevel()
         {
             Map.UpdateSprite(SpriteManager.GetDoor().GetPosition(), SpriteManager.GetGround());
-            _hasPlayerFoundKeyInCurrentLevel = true;
+            GUIManager.SetInfoDialogBar("The door has opened! Go through it!");
+            hasPlayerFoundKeyInCurrentLevel = true;
         }
 
         /// <summary>

@@ -20,11 +20,11 @@ namespace Escape_Room
 
         public static void CreateAllGameSprites()
         {
-            ground = new Sprite(GroundLabel, GroundLabel, ConsoleColor.White, ConsoleColor.Gray);
-            wall = new Sprite(WallLabel, WallLabel, ConsoleColor.White, ConsoleColor.DarkGray);
-            key = new Sprite(KeyLabel, KeyLabel, ConsoleColor.White, ConsoleColor.Yellow);
-            door = new Sprite(DoorLabel, DoorLabel, ConsoleColor.White, ConsoleColor.Magenta);
-            player = new Player(PlayerLabel, PlayerLabel, ConsoleColor.White, ConsoleColor.Blue);
+            ground = new Sprite(' ', GroundLabel, ConsoleColor.White, ConsoleColor.Gray);
+            wall = new Sprite(' ', WallLabel, ConsoleColor.White, ConsoleColor.DarkGray);
+            key = new Sprite(' ', KeyLabel, ConsoleColor.White, ConsoleColor.Yellow);
+            door = new Sprite(' ', DoorLabel, ConsoleColor.White, ConsoleColor.Magenta);
+            player = new Player(' ', PlayerLabel, ConsoleColor.White, ConsoleColor.Blue);
         }
 
         private static Dictionary<char, Sprite> _spriteKeyPairs => new()

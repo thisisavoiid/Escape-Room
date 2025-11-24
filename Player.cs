@@ -70,18 +70,21 @@ namespace Escape_Room
         {
             Vector2 targetPosition = new Vector2(this.position.x, this.position.y) + new Vector2(direction.x, direction.y);
 
-            if ((targetPosition.x < Map.GetSize().width && targetPosition.x >= 0) &&
-                (targetPosition.y <= Map.GetSize().height && targetPosition.y >= 0))
+            if (targetPosition != this.position)
             {
-                if (!IsTrespassable(targetPosition)) { return; }
-                if (!canMove) { return; }
-                if (IsCollectible(targetPosition)) { GameManager.CollectKeyInCurrentLevel(); }
-                if (IsLevelExit(targetPosition)) { GameManager.StartNextLevel(); }
+                if ((targetPosition.x < Map.GetSize().width && targetPosition.x >= 0) &&
+                    (targetPosition.y <= Map.GetSize().height && targetPosition.y >= 0))
+                {
+                    if (!IsTrespassable(targetPosition)) { return; }
+                    if (!canMove) { return; }
+                    if (IsCollectible(targetPosition)) { GameManager.CollectKeyInCurrentLevel(); }
+                    if (IsLevelExit(targetPosition)) { GameManager.StartNextLevel(); }
 
-                Map.UpdateSprite(this.position, SpriteManager.GetGround());
-                this.position = targetPosition;
-                Map.UpdateSprite(this.position, SpriteManager.GetPlayer());
-                stepsDone++;
+                    Map.UpdateSprite(this.position, SpriteManager.GetGround());
+                    this.position = targetPosition;
+                    Map.UpdateSprite(this.position, SpriteManager.GetPlayer());
+                    stepsDone++;
+                }
             }
         }
     }
