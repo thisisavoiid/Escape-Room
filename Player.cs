@@ -7,42 +7,13 @@ using System.Threading.Tasks;
 
 namespace Escape_Room
 {
-    /// <summary>
-    /// Represents the player character in the game, inherits from <see cref="Sprite"/>.
-    /// Handles movement, collisions, and interactions with collectibles and level exits.
-    /// </summary>
     public class Player : Sprite
     {
-        /// <summary>
-        /// List of sprites that the player cannot move through.
-        /// </summary>
         private readonly List<Sprite> _nonTrespassableSprites;
 
-        /// <summary>
-        /// Number of steps the player has taken.
-        /// </summary>
-        public int stepsDone = 0;
+        public int stepsDone { get; private set; } = 0;
+        public bool canMove { get; private set; } = true;
 
-        /// <summary>
-        /// Whether the player is allowed to move.
-        /// </summary>
-        public bool canMove = true;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Player"/> class.
-        /// </summary>
-        /// <param name="character">
-        /// The character displayed for the player.
-        /// </param>
-        /// <param name="label">
-        /// The label representing the player internally.
-        /// </param>
-        /// <param name="fgcolor">
-        /// Foreground color of the player sprite.
-        /// </param>
-        /// <param name="bgcolor">
-        /// Background color of the player sprite.
-        /// </param>
         public Player(char character, char label, ConsoleColor fgcolor, ConsoleColor bgcolor) : base(character, label, fgcolor, bgcolor)
         {
             this._nonTrespassableSprites = new List<Sprite>() { SpriteManager.GetDoor(), SpriteManager.GetWall() };
@@ -53,53 +24,48 @@ namespace Escape_Room
         }
 
         /// <summary>
-        /// Checks if a given position is passable by the player.
+        /// Determines whether the sprite at the given position can be moved onto.
         /// </summary>
-        /// <param name="position">
-        /// The target position to check.
-        /// </param>
-        /// <returns>
-        /// True if the position is passable; otherwise, false.
-        /// </returns>
+        /// <param name="position">The target position to check.</param>
+        /// <returns>True if the position is trespassable; otherwise, false.</returns>
         private bool IsTrespassable(Vector2 position)
         {
-            Sprite spriteAtTargetPosition = SpriteManager.GetSpriteFromChar(Map.GetChars()[position.x, position.y]);
+            Sprite spriteAtTargetPosition = Map.GetSpriteAt(position);
             return !_nonTrespassableSprites.Select(sprite => sprite.label).Contains(spriteAtTargetPosition.label);
         }
 
         /// <summary>
-        /// Checks if the player can collect a sprite at a given position.
+        /// Determines whether the sprite at the given position is collectible (i.e., a key).
         /// </summary>
-        /// <param name="position">
-        /// The target position to check.
-        /// </param>
-        /// <returns>
-        /// True if the position contains a collectible; otherwise, false.
-        /// </returns>
-        private bool IsCollectible(Vector2 position)
+        /// <param name="position">The target position to check.</param>
+        /// <returns>True if the position contains a collectible; otherwise, false.</returns>
+        private static bool IsCollectible(Vector2 position)
         {
-            Sprite spriteAtTargetPosition = SpriteManager.GetSpriteFromChar(Map.GetChars()[position.x, position.y]);
-            return spriteAtTargetPosition.label == 'K';
+            Sprite spriteAtTargetPosition = Map.GetSpriteAt(position);
+            return spriteAtTargetPosition.label == SpriteManager.KeyLabel;
+        }
+
+        public void DisableMovement()
+        {
+            canMove = false;
+        }
+
+        public void EnableMovement()
+        {
+            canMove = true;
         }
 
         /// <summary>
-        /// Checks if a given position is the level exit.
+        /// Determines whether the given position is the level exit (door).
         /// </summary>
-        /// <param name="position">
-        /// The target position to check.
-        /// </param>
-        /// <returns>
-        /// True if the position is the level exit; otherwise, false.
-        /// </returns>
+        /// <param name="position">The target position to check.</param>
+        /// <returns>True if the position is the level exit; otherwise, false.</returns>
         private bool IsLevelExit(Vector2 position) => position == SpriteManager.GetDoor().GetPosition();
 
         /// <summary>
-        /// Moves the player in a specified direction if allowed.
-        /// Handles collisions, collectibles, and level progression.
+        /// Moves the player in the specified direction, handling collisions, collectibles, and level progression.
         /// </summary>
-        /// <param name="direction">
-        /// The direction vector to move the player.
-        /// </param>
+        /// <param name="direction">The direction to move the player.</param>
         public void Move(Vector2 direction)
         {
             Vector2 targetPosition = new Vector2(this.position.x, this.position.y) + new Vector2(direction.x, direction.y);

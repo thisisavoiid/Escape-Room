@@ -6,9 +6,6 @@ using System.Threading.Tasks;
 
 namespace Escape_Room
 {
-    /// <summary>
-    /// Manages overall game flow: mode selection, level progression and game loop.
-    /// </summary>
     public class GameManager
     {
         private enum E_GameMode
@@ -27,11 +24,6 @@ namespace Escape_Room
         private static int _levelCount = 0;
 
         private static Player _player = SpriteManager.GetPlayer();
-
-        /// <summary>
-        /// Starts the custom level setup flow. Prompts the user for map width and height,
-        /// validates input and applies the chosen map size.
-        /// </summary>
 
         private static void StartCustomLevelSetupFlow()
         {
@@ -88,10 +80,8 @@ namespace Escape_Room
         }
 
         /// <summary>
-        /// Starts the game selection flow. Shows available game modes and waits for user input
-        /// to select either a premade level mode or a custom level mode, then initializes the map accordingly.
+        /// Starts the game mode selection flow and initializes the chosen mode.
         /// </summary>
-
         public static void StartGameSelectionFlow()
         {
             Console.WriteLine("[GameManager] Mode?" + "\n" + string.Join("\n", typeof(E_GameMode).GetEnumNames()));
@@ -131,7 +121,6 @@ namespace Escape_Room
                         _currentLevel = 1;
                         StartCustomLevelSetupFlow();
                         Map.Initialize();
-
                         break;
                     }
             }
@@ -141,34 +130,29 @@ namespace Escape_Room
             Map.Print();
 
             StartGameLoop();
-
         }
 
         /// <summary>
-        /// Returns the current level index.
+        /// Returns the current level number.
         /// </summary>
-
+        /// <returns>The current level index.</returns>
         public static int GetCurrentLevel()
         {
             return _currentLevel;
         }
 
         /// <summary>
-        /// Sets the current level index.
+        /// Sets the current level number.
         /// </summary>
-        /// <param name="currentLevel">
-        /// The level index to set as the current level.
-        /// </param>
-
+        /// <param name="currentLevel">The level to set as current.</param>
         public static void SetCurrentLevel(int currentLevel)
         {
             _currentLevel = currentLevel;
         }
 
         /// <summary>
-        /// Main game loop. Keeps processing player movement until the game is finished.
+        /// Starts the main game loop, handling player movement.
         /// </summary>
-
         public static void StartGameLoop()
         {
             while (!_isGameFinished)
@@ -177,19 +161,14 @@ namespace Escape_Room
             }
         }
 
-        /// <summary>
-        /// Starts the end game flow: disables player movement and performs finalization steps.
-        /// </summary>
-
         private static void StartEndGameFlow()
         {
-            _player.canMove = false;
+            _player.DisableMovement();
         }
 
         /// <summary>
-        /// Advances the game to the next level. If the current level is the last one, ends the game.
+        /// Advances the game to the next level or ends the game if the last level has been reached.
         /// </summary>
-
         public static void StartNextLevel()
         {
             if (_currentLevel >= _levelCount)
@@ -198,7 +177,7 @@ namespace Escape_Room
                 return;
             }
 
-            _player.canMove = false;
+            _player.DisableMovement();
             _isGameFinished = true;
             _currentLevel++;
 
@@ -207,15 +186,14 @@ namespace Escape_Room
             Map.Print();
 
             _isGameFinished = false;
-            _player.canMove = true;
+            _player.EnableMovement();
 
             StartGameLoop();
         }
 
         /// <summary>
-        /// Called when the player collects the key in the current level. Updates the map and state.
+        /// Collects the key in the current level and updates the door sprite.
         /// </summary>
-
         public static void CollectKeyInCurrentLevel()
         {
             Map.UpdateSprite(SpriteManager.GetDoor().GetPosition(), SpriteManager.GetGround());
@@ -223,14 +201,12 @@ namespace Escape_Room
         }
 
         /// <summary>
-        /// Performs initial game setup such as making the cursor visible and creating sprites.
+        /// Sets up the game by creating all necessary sprites.
         /// </summary>
-
         public static void SetupGame()
         {
             Console.CursorVisible = true;
             SpriteManager.CreateAllGameSprites();
         }
-
     }
 }

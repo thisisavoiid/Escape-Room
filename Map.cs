@@ -8,9 +8,6 @@ using System.Threading.Tasks;
 
 namespace Escape_Room
 {
-    /// <summary>
-    /// Manages map generation, loading, initialization and rendering for the Escape Room game.
-    /// </summary>
     public class Map
     {
         private static Random random = new Random();
@@ -115,29 +112,21 @@ namespace Escape_Room
             },
         };
 
-        /// <summary>
+        // <summary>
         /// Returns the current size of the map.
         /// </summary>
+        /// <returns>The <see cref="Size"/> of the map.</returns>
         public static Size GetSize()
         {
             return mapSize;
         }
 
-        /// <summary>
-        /// Sets the size of the map.
-        /// </summary>
-        /// <param name="size">
-        /// The new size of the map.
-        /// </param>
         public static void SetSize(Size size)
         {
             mapSize = size;
             Console.WriteLine($"[MAP] Size has been set to {size} -");
         }
 
-        /// <summary>
-        /// Randomly selects a valid door position along the map border.
-        /// </summary>
         private static Vector2 GetPossibleDoorPosition()
         {
             List<Vector2> possibleDoorCoordinates = new List<Vector2>();
@@ -160,27 +149,23 @@ namespace Escape_Room
         }
 
         /// <summary>
-        /// Returns the currently loaded map characters.
+        /// Returns the current map characters.
         /// </summary>
+        /// <returns>A 2D array of characters representing the map.</returns>
         public static char[,] GetChars()
         {
             return mapChars;
         }
 
         /// <summary>
-        /// Returns the number of premade levels.
+        /// Returns the number of premade levels available.
         /// </summary>
+        /// <returns>The total count of premade levels.</returns>
         public static int GetPremadeLevelCount()
         {
             return levelMapChars.GetLength(0);
         }
 
-        /// <summary>
-        /// Loads a premade level into the map and positions key game sprites.
-        /// </summary>
-        /// <param name="level">
-        /// The level index to load.
-        /// </param>
         public static void LoadLevelMap(int level)
         {
             mapSize.width = levelMapChars.GetLength(1);
@@ -195,13 +180,13 @@ namespace Escape_Room
 
                     switch (mapChars[x, y])
                     {
-                        case 'K':
+                        case SpriteManager.KeyLabel:
                             SpriteManager.GetKey().SetPosition(new Vector2(x, y));
                             break;
-                        case 'P':
+                        case SpriteManager.PlayerLabel:
                             SpriteManager.GetPlayer().SetPosition(new Vector2(x, y));
                             break;
-                        case 'D':
+                        case SpriteManager.DoorLabel:
                             SpriteManager.GetDoor().SetPosition(new Vector2(x, y));
                             break;
                     }
@@ -212,14 +197,10 @@ namespace Escape_Room
         }
 
         /// <summary>
-        /// Updates a sprite's character on the map and redraws it.
+        /// Updates the character at the specified position and draws the new sprite.
         /// </summary>
-        /// <param name="spritePos">
-        /// The position of the sprite on the map.
-        /// </param>
-        /// <param name="newSprite">
-        /// The sprite to draw at the given position.
-        /// </param>
+        /// <param name="spritePos">The position of the sprite to update.</param>
+        /// <param name="newSprite">The new sprite to place at the position.</param>
         public static void UpdateSprite(Vector2 spritePos, Sprite newSprite)
         {
             mapChars[spritePos.x, spritePos.y] = newSprite.label;
@@ -228,8 +209,19 @@ namespace Escape_Room
         }
 
         /// <summary>
-        /// Initializes a randomly generated map with a player, key, door and ground/wall tiles.
+        /// Returns the sprite located at the given position.
         /// </summary>
+        /// <param name="position">The position to query.</param>
+        /// <returns>The <see cref="Sprite"/> at the specified position.</returns>
+        public static Sprite GetSpriteAt(Vector2 position)
+        {
+            if (position.x < 0 || position.x > mapSize.width || position.y < 0 || position.y > mapSize.height)
+            {
+                return SpriteManager.GetWall();
+            }
+            return SpriteManager.GetSpriteFromChar(mapChars[position.x, position.y]);
+        }
+
         public static void Initialize()
         {
             mapChars = new char[mapSize.width, mapSize.height];
@@ -259,30 +251,30 @@ namespace Escape_Room
                     if ((y == 0 || y == mapSize.height - 1 || x == 0 || x == mapSize.width - 1) &&
                         (x, y) != (door.GetPosition().x, door.GetPosition().y))
                     {
-                        mapChars[x, y] = 'W';
+                        mapChars[x, y] = SpriteManager.WallLabel;
                     }
                     else if ((x, y) == (player.GetPosition().x, player.GetPosition().y))
                     {
-                        mapChars[x, y] = 'P';
+                        mapChars[x, y] = SpriteManager.PlayerLabel;
                     }
                     else if ((x, y) == (key.GetPosition().x, key.GetPosition().y))
                     {
-                        mapChars[x, y] = 'K';
+                        mapChars[x, y] = SpriteManager.KeyLabel;
                     }
                     else if ((x, y) == (door.GetPosition().x, door.GetPosition().y))
                     {
-                        mapChars[x, y] = 'D';
+                        mapChars[x, y] = SpriteManager.DoorLabel;
                     }
                     else
                     {
-                        mapChars[x, y] = 'G';
+                        mapChars[x, y] = SpriteManager.GroundLabel;
                     }
                 }
             }
         }
 
         /// <summary>
-        /// Clears the console and prints the current state of the map using sprite graphics.
+        /// Prints the current map to the console.
         /// </summary>
         public static void Print()
         {

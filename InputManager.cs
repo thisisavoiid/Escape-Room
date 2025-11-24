@@ -9,9 +9,6 @@ using Vector2 = Escape_Room.Vector2;
 
 namespace Escape_Room
 {
-    /// <summary>
-    /// Handles user keyboard input and converts pressed keys into movement vectors.
-    /// </summary>
     public class InputManager
     {
         private static readonly Dictionary<ConsoleKey, Vector2> _inputMap = new Dictionary<ConsoleKey, Vector2>()
@@ -23,16 +20,16 @@ namespace Escape_Room
         };
 
         /// <summary>
-        /// Gets the key pressed by the user without echoing it to the console.
+        /// Returns the next key pressed by the user.
         /// </summary>
+        /// <returns>The <see cref="ConsoleKey"/> representing the key pressed.</returns>
         public static ConsoleKey GetKeyPressed() => Console.ReadKey(true).Key;
 
         /// <summary>
-        /// Converts a ConsoleKey input into a movement direction vector.
+        /// Returns the movement vector associated with a given key.
         /// </summary>
-        /// <param name="key">
-        /// The pressed key to translate into a movement vector.
-        /// </param>
+        /// <param name="key">The key to translate into a movement vector.</param>
+        /// <returns>A <see cref="Vector2"/> representing the movement direction.</returns>
         public static Vector2 GetMoveDirection(ConsoleKey key) => _inputMap.GetValueOrDefault(key, Vector2.Zero());
     }
 }

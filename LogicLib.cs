@@ -6,31 +6,22 @@ using System.Threading.Tasks;
 
 namespace Escape_Room
 {
-    /// <summary>
-    /// Provides utility logic functions such as number validation and range checking.
-    /// </summary>
     public class LogicLib
     {
         /// <summary>
-        /// Checks whether the given string can be parsed into an integer.
+        /// Determines whether the given string represents a valid integer numeral.
         /// </summary>
-        /// <param name="input">
-        /// The string to validate.
-        /// </param>
+        /// <param name="input">The string to check.</param>
+        /// <returns>True if the string is a numeral; otherwise, false.</returns>
         public static bool IsNumeral(string input) => int.TryParse(input, out _);
 
         /// <summary>
-        /// Checks whether the given integer lies within a specified inclusive range.
+        /// Determines whether the given integer falls within the specified range (inclusive).
         /// </summary>
-        /// <param name="input">
-        /// The number to check.
-        /// </param>
-        /// <param name="min">
-        /// The minimum accepted value.
-        /// </param>
-        /// <param name="max">
-        /// The maximum accepted value.
-        /// </param>
+        /// <param name="input">The number to check.</param>
+        /// <param name="min">The minimum value in the range.</param>
+        /// <param name="max">The maximum value in the range.</param>
+        /// <returns>True if the number is within the range; otherwise, false.</returns>
         public static bool IsInRange(int input, int min, int max) => input <= max && input >= min;
     }
 }
