@@ -11,14 +11,16 @@ namespace Escape_Room
         public char character;
         public ConsoleColor foregroundColor;
         public ConsoleColor backgroundColor;
+        public char label;
+
         protected Vector2 position;
 
-        public Sprite(char character, ConsoleColor fgcolor, ConsoleColor bgcolor)
+        public Sprite(char character, char label, ConsoleColor fgcolor, ConsoleColor bgcolor)
         {
-            Console.WriteLine("Sprite has been created!");
             this.character = character;
             this.foregroundColor = fgcolor;
             this.backgroundColor = bgcolor;
+            this.label = label;
         }
 
         public void SetPosition(Vector2 pos) => position = pos;

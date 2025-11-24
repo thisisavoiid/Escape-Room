@@ -1,8 +1,10 @@
 ﻿using Escape_Room;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.Intrinsics.Arm;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -120,6 +122,7 @@ namespace Escape_Room
         public static void SetSize(Size size)
         {
             mapSize = size;
+            Console.WriteLine($"[MAP] Size has been set to {size} -");
         }
 
         private static Vector2 GetPossibleDoorPosition()
@@ -146,7 +149,62 @@ namespace Escape_Room
             };
         }
 
-        public static void Initialize() // Initialisiert das mapChars-Array, platziert zufällig Spieler und Schlüssel, setzt Ränder, Tür und Boden
+        public static char[,] GetChars()
+        {
+            return mapChars;
+        }
+
+        public static int GetPremadeLevelCount()
+        {
+            return levelMapChars.GetLength(0);
+        }
+
+        public static void LoadLevelMap(int level)
+        {
+            mapSize.width = levelMapChars.GetLength(1);
+            mapSize.height = levelMapChars.GetLength(2);
+            mapChars = new char[mapSize.width, mapSize.height];
+
+            for (int y = 0; y < mapSize.height; y++)
+            {
+                for (int x = 0; x < mapSize.width; x++)
+                {
+                    mapChars[x, y] = levelMapChars[level - 1, x, y];
+
+                    switch (mapChars[x, y])
+                    {
+                        case 'K':
+                            {
+                                SpriteManager.GetKey().SetPosition(new Vector2(x, y));
+                                Console.WriteLine(SpriteManager.GetKey().GetPosition().ToString());
+                                break;
+                            }
+                        case 'P':
+                            {
+                                SpriteManager.GetPlayer().SetPosition(new Vector2(x, y));
+                                break;
+                            }
+                        case 'D':
+                            {
+                                SpriteManager.GetDoor().SetPosition(new Vector2(x, y));
+                                break;
+                            }
+                    }
+                }
+            }
+
+            GameManager.SetCurrentLevel(level);
+
+        }
+
+        public static void UpdateSprite(Vector2 spritePos, Sprite newSprite)
+        {
+            mapChars[spritePos.x, spritePos.y] = newSprite.label;
+            Console.SetCursorPosition(spritePos.x, spritePos.y);
+            newSprite.Draw();
+        }
+
+        public static void Initialize()
         {
             mapChars = new char[mapSize.width, mapSize.height];
 
@@ -175,30 +233,45 @@ namespace Escape_Room
                 {
                     if ((y == 0 || y == mapSize.height - 1 || x == 0 || x == mapSize.width - 1) && (x, y) != (door.GetPosition().x, door.GetPosition().y))
                     {
-                        mapChars[y, x] = 'W';
+                        mapChars[x, y] = 'W';
                     }
                     else if ((x, y) == (player.GetPosition().x, player.GetPosition().y))
                     {
-                        mapChars[y, x] = 'P';
+                        mapChars[x, y] = 'P';
                     }
                     else if ((x, y) == (key.GetPosition().x, key.GetPosition().y))
                     {
-                        mapChars[y, x] = 'K';
+                        mapChars[x, y] = 'K';
                     }
                     else if ((x, y) == (door.GetPosition().x, door.GetPosition().y))
                     {
-                        mapChars[y, x] = 'D';
+                        mapChars[x, y] = 'D';
                     }
                     else
                     {
-                        mapChars[y, x] = 'G';
+                        mapChars[x, y] = 'G';
                     }
                 }
             }
-
-            Console.WriteLine("Custom map has been created and set up.");
         }
 
+
+        public static void Print()
+        {
+            Console.Clear();
+            Size mapSize = GetSize();
+            Sprite sprite;
+
+            for (int y = 0; y < mapSize.height; y++)
+            {
+                for (int x = 0; x < mapSize.width; x++)
+                {
+                    sprite = SpriteManager.GetSpriteFromChar(mapChars[x, y]);
+                    sprite.Draw();
+                }
+                Console.Write("\n");
+            }
+        }
     }
 }
 

@@ -38,7 +38,7 @@ namespace Escape_Room
         public static Vector2 Up() => new Vector2() { x = 0, y = 1 };
         public static Vector2 Down() => new Vector2() { x = 0, y = -1 };
         public static Vector2 Left() => new Vector2() { x = -1, y = 0 };
-        public static Vector2 Right() => new Vector2() { x = 1, y = 1 };
+        public static Vector2 Right() => new Vector2() { x = 1, y = 0 };
         public static Vector2 Zero() => new Vector2() { x = 0, y = 0 };
 
 

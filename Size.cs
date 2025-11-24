@@ -10,5 +10,7 @@ namespace Escape_Room
     {
         public int width;
         public int height;
+
+        public override string ToString() => $"({width}, {height})";
     }
 }

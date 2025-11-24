@@ -17,12 +17,25 @@ namespace Escape_Room
 
         public static void CreateAllGameSprites()
         {
-            player = new Player(' ', ConsoleColor.White, ConsoleColor.Blue);
-            ground = new Sprite(' ', ConsoleColor.White, ConsoleColor.Gray);
-            wall = new Sprite(' ', ConsoleColor.White, ConsoleColor.DarkGray);
-            key = new Sprite(' ', ConsoleColor.White, ConsoleColor.Yellow);
-            door = new Sprite(' ', ConsoleColor.White, ConsoleColor.Magenta);
-            Console.WriteLine("Created all Sprite instances.");
+            ground = new Sprite('G', 'G', ConsoleColor.White, ConsoleColor.Gray);
+            wall = new Sprite('W', 'W', ConsoleColor.White, ConsoleColor.DarkGray);
+            key = new Sprite('K', 'K', ConsoleColor.White, ConsoleColor.Yellow);
+            door = new Sprite('D', 'D', ConsoleColor.White, ConsoleColor.Magenta);
+            player = new Player('P', 'P', ConsoleColor.White, ConsoleColor.Blue);
+        }
+
+        private static Dictionary<char, Sprite> _spriteKeyPairs => new()
+        {
+            {'W', GetWall() },
+            {'D', GetDoor() },
+            {'P', GetPlayer() },
+            {'K', GetKey() },
+            {'G', GetGround() }
+        };
+
+        public static Sprite GetSpriteFromChar(char spriteChar)
+        {
+            return (_spriteKeyPairs[spriteChar]);
         }
 
         public static Player GetPlayer() => player;

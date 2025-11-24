@@ -15,14 +15,11 @@ namespace Escape_Room
         {
             {ConsoleKey.LeftArrow, Vector2.Left()},
             {ConsoleKey.RightArrow, Vector2.Right()},
-            {ConsoleKey.UpArrow, Vector2.Up()},
-            {ConsoleKey.DownArrow, Vector2.Down()}
+            {ConsoleKey.UpArrow, Vector2.Down()},
+            {ConsoleKey.DownArrow, Vector2.Up()}
         };
-
+        
         public static ConsoleKey GetKeyPressed() => Console.ReadKey(true).Key;
-        public static Vector2 GetMoveDirection(ConsoleKey key)
-        {
-            return _inputMap.GetValueOrDefault(key, Vector2.Zero());
-        }
+        public static Vector2 GetMoveDirection(ConsoleKey key) => _inputMap.GetValueOrDefault(key, Vector2.Zero());
     }
 }
