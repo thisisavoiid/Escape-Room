@@ -157,7 +157,7 @@ namespace Escape_Room
         /// </summary>
         public static void StartGameLoop()
         {
-            GUIManager.SetInfoDialogBar("Find the key!");
+            GUIManager.SetInfoDialogBar("Objective: Find the key!");
 
             while (!_isGameFinished)
             {
@@ -205,7 +205,7 @@ namespace Escape_Room
         public static void CollectKeyInCurrentLevel()
         {
             Map.UpdateSprite(SpriteManager.GetDoor().GetPosition(), SpriteManager.GetGround());
-            GUIManager.SetInfoDialogBar("The door has opened! Go through it!");
+            GUIManager.SetInfoDialogBar("Objective: The door has opened! Go through it!");
             hasPlayerFoundKeyInCurrentLevel = true;
         }
 
