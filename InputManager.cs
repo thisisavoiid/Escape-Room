@@ -19,7 +19,7 @@ namespace Escape_Room
             {ConsoleKey.UpArrow, Vector2.Down()},
             {ConsoleKey.DownArrow, Vector2.Up()}
         };
-
+        
         /// <summary>
         /// Returns the next key pressed by the user.
         /// </summary>
