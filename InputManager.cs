@@ -11,6 +11,7 @@ namespace Escape_Room
 {
     public class InputManager
     {
+        // Maps arrow keys to corresponding movement vectors
         private static readonly Dictionary<ConsoleKey, Vector2> _inputMap = new Dictionary<ConsoleKey, Vector2>()
         {
             {ConsoleKey.LeftArrow, Vector2.Left()},
@@ -22,14 +23,13 @@ namespace Escape_Room
         /// <summary>
         /// Returns the next key pressed by the user.
         /// </summary>
-        /// <returns>The <see cref="ConsoleKey"/> representing the key pressed.</returns>
         public static ConsoleKey GetKeyPressed() => Console.ReadKey(true).Key;
 
         /// <summary>
         /// Returns the movement vector associated with a given key.
+        /// Defaults to zero vector if key is not mapped.
         /// </summary>
         /// <param name="key">The key to translate into a movement vector.</param>
-        /// <returns>A <see cref="Vector2"/> representing the movement direction.</returns>
         public static Vector2 GetMoveDirection(ConsoleKey key) => _inputMap.GetValueOrDefault(key, Vector2.Zero());
     }
 }

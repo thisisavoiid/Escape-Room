@@ -112,21 +112,31 @@ namespace Escape_Room
             },
         };
 
-        // <summary>
+        /// <summary>
         /// Returns the current size of the map.
         /// </summary>
-        /// <returns>The <see cref="Size"/> of the map.</returns>
+        /// <returns>
+        /// The current size of the map.
+        /// </returns>
         public static Size GetSize()
         {
             return mapSize;
         }
 
+        /// <summary>
+        /// Sets the map's size.
+        /// </summary>
         public static void SetSize(Size size)
         {
             mapSize = size;
-            Console.WriteLine($"[MAP] Size has been set to {size} -");
         }
 
+        /// <summary>
+        /// Determines a random possible door position on the map edges.
+        /// </summary>
+        /// <returns>
+        /// A random possible door position on the map edges as <see cref="Vector2"/>.
+        /// </returns>
         private static Vector2 GetPossibleDoorPosition()
         {
             List<Vector2> possibleDoorCoordinates = new List<Vector2>();
@@ -144,28 +154,34 @@ namespace Escape_Room
             }
 
             Vector2 selectedDoorPos = possibleDoorCoordinates[random.Next(possibleDoorCoordinates.Count)];
-
             return new Vector2 { x = selectedDoorPos.x, y = selectedDoorPos.y };
         }
 
         /// <summary>
-        /// Returns the current map characters.
+        /// Returns the 2D array of map characters.
         /// </summary>
-        /// <returns>A 2D array of characters representing the map.</returns>
+        /// <returns>
+        /// The 2D array of map characters
+        /// </returns>
         public static char[,] GetChars()
         {
             return mapChars;
         }
 
         /// <summary>
-        /// Returns the number of premade levels available.
+        /// Returns the total number of premade levels.
         /// </summary>
-        /// <returns>The total count of premade levels.</returns>
+        /// <returns>
+        /// The total number of premade levels.
+        /// </returns>
         public static int GetPremadeLevelCount()
         {
             return levelMapChars.GetLength(0);
         }
 
+        /// <summary>
+        /// Loads the specified premade level into the map.
+        /// </summary>
         public static void LoadLevelMap(int level)
         {
             mapSize.width = levelMapChars.GetLength(1);
@@ -197,10 +213,8 @@ namespace Escape_Room
         }
 
         /// <summary>
-        /// Updates the character at the specified position and draws the new sprite.
+        /// Updates the sprite at the specified position and redraws it on the console.
         /// </summary>
-        /// <param name="spritePos">The position of the sprite to update.</param>
-        /// <param name="newSprite">The new sprite to place at the position.</param>
         public static void UpdateSprite(Vector2 spritePos, Sprite newSprite)
         {
             mapChars[spritePos.x, spritePos.y] = newSprite.label;
@@ -209,10 +223,8 @@ namespace Escape_Room
         }
 
         /// <summary>
-        /// Returns the sprite located at the given position.
+        /// Returns the sprite located at a given position on the map.
         /// </summary>
-        /// <param name="position">The position to query.</param>
-        /// <returns>The <see cref="Sprite"/> at the specified position.</returns>
         public static Sprite GetSpriteAt(Vector2 position)
         {
             if (position.x < 0 || position.x > mapSize.width || position.y < 0 || position.y > mapSize.height)
@@ -222,6 +234,9 @@ namespace Escape_Room
             return SpriteManager.GetSpriteFromChar(mapChars[position.x, position.y]);
         }
 
+        /// <summary>
+        /// Initializes a custom map with random positions for player, key, and door.
+        /// </summary>
         public static void Initialize()
         {
             mapChars = new char[mapSize.width, mapSize.height];
@@ -278,7 +293,7 @@ namespace Escape_Room
         /// </summary>
         public static void Print()
         {
-            Console.Clear();
+            GUIManager.ClearConsole(true);
             Size mapSize = GetSize();
             Sprite sprite;
 

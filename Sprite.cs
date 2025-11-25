@@ -13,6 +13,13 @@ namespace Escape_Room
         public char label { get; protected set; }
         protected Vector2 position;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Sprite"/> class with the specified visual properties and label.
+        /// </summary>
+        /// <param name="character">The character used to represent the sprite on the console.</param>
+        /// <param name="label">The internal label identifying the sprite.</param>
+        /// <param name="fgcolor">The foreground color of the sprite.</param>
+        /// <param name="bgcolor">The background color of the sprite.</param>
         public Sprite(char character, char label, ConsoleColor fgcolor, ConsoleColor bgcolor)
         {
             this.character = character;

@@ -18,6 +18,9 @@ namespace Escape_Room
         public const char WallLabel = 'W';
         public const char GroundLabel = 'G';
 
+        /// <summary>
+        /// Initializes all core game sprites with their respective characters and colors.
+        /// </summary>
         public static void CreateAllGameSprites()
         {
             ground = new Sprite(' ', GroundLabel, ConsoleColor.White, ConsoleColor.Gray);
@@ -37,38 +40,38 @@ namespace Escape_Room
         };
 
         /// <summary>
-        /// Returns the sprite associated with a given character.
+        /// Returns the <see cref="Sprite"/> associated with a given character.
         /// </summary>
-        /// <param name="spriteChar">The character representing a sprite.</param>
+        /// <param name="spriteChar">The character representing a <see cref="Sprite"/>.</param>
         /// <returns>The corresponding <see cref="Sprite"/> object.</returns>
         public static Sprite GetSpriteFromChar(char spriteChar)
         {
             return (_spriteKeyPairs[spriteChar]);
         }
 
-        /// <summary>
-        /// Returns the player sprite.
-        /// </summary>
+        /// <returns>
+        /// The player <see cref="Sprite"/> instance.
+        /// </returns>
         public static Player GetPlayer() => player;
 
-        /// <summary>
-        /// Returns the ground sprite.
-        /// </summary>
+        /// <returns>
+        /// The ground <see cref="Sprite"/> instance.
+        /// </returns>
         public static Sprite GetGround() => ground;
 
-        /// <summary>
-        /// Returns the wall sprite.
-        /// </summary>
+        /// <returns>
+        /// The wall <see cref="Sprite"/> instance.
+        /// </returns>
         public static Sprite GetWall() => wall;
 
-        /// <summary>
-        /// Returns the key sprite.
-        /// </summary>
+        /// <returns>
+        /// The key <see cref="Sprite"/> instance.
+        /// </returns>
         public static Sprite GetKey() => key;
 
-        /// <summary>
-        /// Returns the door sprite.
-        /// </summary>
+        /// <returns>
+        /// The door <see cref="Sprite"/> instance.
+        /// </returns>
         public static Sprite GetDoor() => door;
     }
 }

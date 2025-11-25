@@ -1,0 +1,47 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+
+namespace Escape_Room
+{
+    public class ConsolePrinter
+    {
+        /// <summary>
+        /// Prints a message to the console using colors defined for the specified print level.
+        /// After printing, optionally pauses execution for a specified duration.
+        /// </summary>
+        /// <param name="printLevel">The <see cref="E_PrintLevel"/> determining the message's color formatting.</param>
+        /// <param name="text">The text message to print.</param>
+        /// <param name="sleepFor">Optional delay in milliseconds after printing the message.</param>
+        public static void Print(E_PrintLevel printLevel, string text, int sleepFor = 0)
+        {
+            bool hasCursorBeenEnabled = Console.CursorVisible;
+
+            Console.CursorVisible = false;
+
+            // Apply the foreground and background colors based on the print level
+            Console.ForegroundColor = PrintLevelFormat.printFormat[printLevel].foregroundColor;
+            Console.BackgroundColor = PrintLevelFormat.printFormat[printLevel].backgroundColor;
+
+            // Print the message to the console
+            Console.WriteLine(text);
+
+            // Reset console colors to default
+            Console.ResetColor();
+
+            // Pause execution if a sleep duration is specified
+            if (sleepFor > 0)
+            {
+                Thread.Sleep(sleepFor);
+            }
+
+            if (hasCursorBeenEnabled)
+            {
+                Console.CursorVisible = true;
+            }
+        }
+    }
+}

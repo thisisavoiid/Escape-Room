@@ -14,6 +14,13 @@ namespace Escape_Room
         public int stepsDone { get; private set; } = 0;
         public bool canMove { get; private set; } = true;
 
+        /// <summary>
+        /// Initializes a new instance of the Player class with the specified visual properties.
+        /// </summary>
+        /// <param name="character">The character representing the player on the map.</param>
+        /// <param name="label">The label used internally for the player sprite.</param>
+        /// <param name="fgcolor">The foreground color of the player.</param>
+        /// <param name="bgcolor">The background color of the player.</param>
         public Player(char character, char label, ConsoleColor fgcolor, ConsoleColor bgcolor) : base(character, label, fgcolor, bgcolor)
         {
             this._nonTrespassableSprites = new List<Sprite>() { SpriteManager.GetDoor(), SpriteManager.GetWall() };
@@ -45,11 +52,17 @@ namespace Escape_Room
             return spriteAtTargetPosition.label == SpriteManager.KeyLabel;
         }
 
+        /// <summary>
+        /// Disables the player's ability to move.
+        /// </summary>
         public void DisableMovement()
         {
             canMove = false;
         }
 
+        /// <summary>
+        /// Enables the player's ability to move.
+        /// </summary>
         public void EnableMovement()
         {
             canMove = true;
@@ -64,6 +77,7 @@ namespace Escape_Room
 
         /// <summary>
         /// Moves the player in the specified direction, handling collisions, collectibles, and level progression.
+        /// Updates the player's position on the map and increments the step counter.
         /// </summary>
         /// <param name="direction">The direction to move the player.</param>
         public void Move(Vector2 direction)
@@ -75,15 +89,30 @@ namespace Escape_Room
                 if ((targetPosition.x < Map.GetSize().width && targetPosition.x >= 0) &&
                     (targetPosition.y <= Map.GetSize().height && targetPosition.y >= 0))
                 {
-                    if (!IsTrespassable(targetPosition)) { return; }
+
                     if (!canMove) { return; }
-                    if (IsCollectible(targetPosition)) { GameManager.CollectKeyInCurrentLevel(); }
-                    if (IsLevelExit(targetPosition)) { GameManager.StartNextLevel(); }
+
+                    if (!IsTrespassable(targetPosition))
+                    {
+                        SoundPlayer.Play(E_Sound.WallCollision);
+                        return;
+                    }
+
+                    if (IsCollectible(targetPosition))
+                    {
+                        GameManager.CollectKeyInCurrentLevel();
+                        SoundPlayer.Play(E_Sound.KeyPickup);
+                    }
 
                     Map.UpdateSprite(this.position, SpriteManager.GetGround());
                     this.position = targetPosition;
                     Map.UpdateSprite(this.position, SpriteManager.GetPlayer());
+
+                    SoundPlayer.Play(E_Sound.Movement);
+
                     stepsDone++;
+
+                    if (IsLevelExit(targetPosition)) { GameManager.StartNextLevel(); }
                 }
             }
         }
