@@ -50,7 +50,7 @@ namespace Escape_Room
 
                 if (!LogicLib.IsNumeral(input))
                 {
-                    SoundPlayer.PlayAsync(SoundType.InvalidInput);
+                    SoundPlayer.Play(SoundType.InvalidInput);
                     ConsolePrinter.Print(
                         PrintLevel.Error,
                         $"Invalid input. Please enter a valid number for the map {(selectionFlowSection == 0 ? "width" : "height")}.",
@@ -68,7 +68,7 @@ namespace Escape_Room
                         {
                             if (!LogicLib.IsInRange(inputToInteger, _minMapSize.Width, _maxMapSize.Width))
                             {
-                                SoundPlayer.PlayAsync(SoundType.InvalidInput);
+                                SoundPlayer.Play(SoundType.InvalidInput);
                                 ConsolePrinter.Print(
                                     PrintLevel.Error,
                                     $"The number you entered is outside the valid range ({_minMapSize.Width}–{_maxMapSize.Width}).",
@@ -78,7 +78,7 @@ namespace Escape_Room
                                 continue;
                             }
 
-                            SoundPlayer.PlayAsync(SoundType.ValidInput);
+                            SoundPlayer.Play(SoundType.ValidInput);
                             desiredMapSize.Width = inputToInteger+2;
                             selectionFlowSection++;
                             break;
@@ -87,7 +87,7 @@ namespace Escape_Room
                         {
                             if (!LogicLib.IsInRange(inputToInteger, _minMapSize.Height, _maxMapSize.Height))
                             {
-                                SoundPlayer.PlayAsync(SoundType.InvalidInput);
+                                SoundPlayer.Play(SoundType.InvalidInput);
                                 ConsolePrinter.Print(
                                     PrintLevel.Error,
                                     $"The number you entered is outside the valid range ({_minMapSize.Height}–{_maxMapSize.Height}).",
@@ -97,7 +97,7 @@ namespace Escape_Room
                                 continue;
                             }
 
-                            SoundPlayer.PlayAsync(SoundType.ValidInput);
+                            SoundPlayer.Play(SoundType.ValidInput);
                             desiredMapSize.Height = inputToInteger+2;
                             selectionFlowSection++;
                             hasMapSizeSelectionFlowFinished = true;
@@ -141,12 +141,13 @@ namespace Escape_Room
                     if (LogicLib.IsInRange(int.Parse(inputChar.ToString()), 1, typeof(GamemodeType).GetEnumNames().Count()))
                     {
                         selectedGameModeIndex = int.Parse(inputChar.ToString()) - 1;
-                        SoundPlayer.PlayAsync(SoundType.ValidInput);
                         break;
                     }
                 }
-                SoundPlayer.PlayAsync(SoundType.InvalidInput);
+                SoundPlayer.Play(SoundType.InvalidInput);
             }
+
+            SoundPlayer.Play(SoundType.ValidInput);
 
             _selectedGameMode = (GamemodeType)selectedGameModeIndex;
 

@@ -87,7 +87,7 @@
 
                     if (!IsTrespassable(targetPosition))
                     {
-                        SoundPlayer.PlayAsync(SoundType.WallCollision);
+                        SoundPlayer.Play(SoundType.WallCollision);
                         return;
                     }
 

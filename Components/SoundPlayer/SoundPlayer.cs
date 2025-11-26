@@ -6,7 +6,7 @@
     public class SoundPlayer
     {
         /// <summary>
-        /// Plays all the <see cref="Sound"/> objects associated with a specific game sound type.
+        /// Plays all the <see cref="Sound"/> objects associated with a specific game sound type asynchronously.
         /// </summary>
         /// <param name="sound">The type of sound to play from the <see cref="SoundIntervalCollection"/>.</param>
         public static void PlayAsync(SoundType sound)
@@ -21,6 +21,21 @@
                     );
                 }
             });
+        }
+
+        /// <summary>
+        /// Plays all the <see cref="Sound"/> objects associated with a specific game sound type.
+        /// </summary>
+        /// <param name="sound">The type of sound to play from the <see cref="SoundIntervalCollection"/>.</param>
+        public static void Play(SoundType sound)
+        {
+            foreach (Sound soundItem in SoundIntervalCollection.soundCollection[sound].Sounds)
+            {
+                Console.Beep(
+                    soundItem.Frequency,
+                    soundItem.Duration
+                );
+            }
         }
     }
 }
