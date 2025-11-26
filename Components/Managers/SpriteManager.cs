@@ -1,8 +1,4 @@
-﻿using Escape_Room;
-using System;
-using System.Collections.Generic;
-
-namespace Escape_Room
+﻿namespace Escape_Room
 {
     public class SpriteManager
     {

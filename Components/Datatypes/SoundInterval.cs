@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Escape_Room
+﻿namespace Escape_Room
 {
     /// <summary>
     /// Represents a sequence of <see cref="Sound"/> objects that are played one after another.

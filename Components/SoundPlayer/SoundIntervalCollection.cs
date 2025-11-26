@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Escape_Room
+﻿namespace Escape_Room
 {
     /// <summary>
     /// Holds a collection of predefined <see cref="SoundInterval"/> objects for different game events.

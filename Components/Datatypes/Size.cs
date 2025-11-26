@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Escape_Room
+﻿namespace Escape_Room
 {
     public struct Size
     {

@@ -1,11 +1,4 @@
-﻿
-using System.Numerics;
-using Vector2 = Escape_Room.Vector2;
-using System.IO;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-
-namespace Escape_Room
+﻿namespace Escape_Room
 {
     class Program
     {

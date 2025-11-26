@@ -1,11 +1,4 @@
-﻿using Escape_Room;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Escape_Room
+﻿namespace Escape_Room
 {
     public class Player : Sprite
     {

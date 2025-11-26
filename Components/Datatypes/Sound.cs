@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Escape_Room
+﻿namespace Escape_Room
 {
     /// <summary>
     /// Represents a single sound with a specific frequency and duration.

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Escape_Room
+﻿namespace Escape_Room
 {
     /// <summary>
     /// Represents a drawable object on the map, such as the _player, _key, _door, or _ground.
