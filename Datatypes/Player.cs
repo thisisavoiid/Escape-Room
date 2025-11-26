@@ -94,21 +94,21 @@ namespace Escape_Room
 
                     if (!IsTrespassable(targetPosition))
                     {
-                        SoundPlayer.Play(SoundType.WallCollision);
+                        SoundPlayer.PlayAsync(SoundType.WallCollision);
                         return;
                     }
 
                     if (IsCollectible(targetPosition))
                     {
                         GameManager.CollectKeyInCurrentLevel();
-                        SoundPlayer.Play(SoundType.KeyPickup);
+                        SoundPlayer.PlayAsync(SoundType.KeyPickup);
                     }
 
                     Map.UpdateSprite(this._position, SpriteManager.GetGround());
                     this._position = targetPosition;
                     Map.UpdateSprite(this._position, SpriteManager.GetPlayer());
 
-                    SoundPlayer.Play(SoundType.Movement);
+                    SoundPlayer.PlayAsync(SoundType.Movement);
 
                     StepsDone++;
 
