@@ -10,11 +10,11 @@ namespace Escape_Room
 {
     public class Map
     {
-        private static Random random = new Random();
-        private static Size mapSize = new Size() { height = 0, width = 0 };
-        private static char[,] mapChars;
+        private static Random _random = new Random();
+        private static Size _mapSize = new Size() { Height = 0, Width = 0 };
+        private static char[,] _mapChars;
 
-        private static char[,,] levelMapChars = new char[5, 15, 15]
+        private static readonly char[,,] _levelMapChars = new char[5, 15, 15]
         {
             // LEVEL 1
             {
@@ -120,7 +120,7 @@ namespace Escape_Room
         /// </returns>
         public static Size GetSize()
         {
-            return mapSize;
+            return _mapSize;
         }
 
         /// <summary>
@@ -128,33 +128,33 @@ namespace Escape_Room
         /// </summary>
         public static void SetSize(Size size)
         {
-            mapSize = size;
+            _mapSize = size;
         }
 
         /// <summary>
-        /// Determines a random possible door position on the map edges.
+        /// Determines a _random possible _door position on the map edges.
         /// </summary>
         /// <returns>
-        /// A random possible door position on the map edges as <see cref="Vector2"/>.
+        /// A _random possible _door position on the map edges as <see cref="Vector2"/>.
         /// </returns>
         private static Vector2 GetPossibleDoorPosition()
         {
             List<Vector2> possibleDoorCoordinates = new List<Vector2>();
 
-            for (int y = 0; y < mapSize.height; y++)
+            for (int y = 0; y < _mapSize.Height; y++)
             {
-                for (int x = 0; x < mapSize.width; x++)
+                for (int x = 0; x < _mapSize.Width; x++)
                 {
-                    if (((y == 0 || y == mapSize.height - 1) && !(x == 0 || x == mapSize.width - 1)) ||
-                        ((x == 0 || x == mapSize.width - 1) && !(y == 0 || y == mapSize.height - 1)))
+                    if (((y == 0 || y == _mapSize.Height - 1) && !(x == 0 || x == _mapSize.Width - 1)) ||
+                        ((x == 0 || x == _mapSize.Width - 1) && !(y == 0 || y == _mapSize.Height - 1)))
                     {
-                        possibleDoorCoordinates.Add(new Vector2 { x = x, y = y });
+                        possibleDoorCoordinates.Add(new Vector2 { X = x, Y = y });
                     }
                 }
             }
 
-            Vector2 selectedDoorPos = possibleDoorCoordinates[random.Next(possibleDoorCoordinates.Count)];
-            return new Vector2 { x = selectedDoorPos.x, y = selectedDoorPos.y };
+            Vector2 selectedDoorPos = possibleDoorCoordinates[_random.Next(possibleDoorCoordinates.Count)];
+            return new Vector2 { X = selectedDoorPos.X, Y = selectedDoorPos.Y };
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Escape_Room
         /// </returns>
         public static char[,] GetChars()
         {
-            return mapChars;
+            return _mapChars;
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace Escape_Room
         /// </returns>
         public static int GetPremadeLevelCount()
         {
-            return levelMapChars.GetLength(0);
+            return _levelMapChars.GetLength(0);
         }
 
         /// <summary>
@@ -184,17 +184,17 @@ namespace Escape_Room
         /// </summary>
         public static void LoadLevelMap(int level)
         {
-            mapSize.width = levelMapChars.GetLength(1);
-            mapSize.height = levelMapChars.GetLength(2);
-            mapChars = new char[mapSize.width, mapSize.height];
+            _mapSize.Width = _levelMapChars.GetLength(1);
+            _mapSize.Height = _levelMapChars.GetLength(2);
+            _mapChars = new char[_mapSize.Width, _mapSize.Height];
 
-            for (int y = 0; y < mapSize.height; y++)
+            for (int y = 0; y < _mapSize.Height; y++)
             {
-                for (int x = 0; x < mapSize.width; x++)
+                for (int x = 0; x < _mapSize.Width; x++)
                 {
-                    mapChars[x, y] = levelMapChars[level - 1, x, y];
+                    _mapChars[x, y] = _levelMapChars[level - 1, x, y];
 
-                    switch (mapChars[x, y])
+                    switch (_mapChars[x, y])
                     {
                         case SpriteManager.KeyLabel:
                             SpriteManager.GetKey().SetPosition(new Vector2(x, y));
@@ -217,8 +217,8 @@ namespace Escape_Room
         /// </summary>
         public static void UpdateSprite(Vector2 spritePos, Sprite newSprite)
         {
-            mapChars[spritePos.x, spritePos.y] = newSprite.label;
-            Console.SetCursorPosition(spritePos.x, spritePos.y);
+            _mapChars[spritePos.X, spritePos.Y] = newSprite.Label;
+            Console.SetCursorPosition(spritePos.X, spritePos.Y);
             newSprite.Draw();
         }
 
@@ -227,19 +227,19 @@ namespace Escape_Room
         /// </summary>
         public static Sprite GetSpriteAt(Vector2 position)
         {
-            if (position.x < 0 || position.x > mapSize.width || position.y < 0 || position.y > mapSize.height)
+            if (position.X < 0 || position.X > _mapSize.Width || position.Y < 0 || position.Y > _mapSize.Height)
             {
                 return SpriteManager.GetWall();
             }
-            return SpriteManager.GetSpriteFromChar(mapChars[position.x, position.y]);
+            return SpriteManager.GetSpriteFromChar(_mapChars[position.X, position.Y]);
         }
 
         /// <summary>
-        /// Initializes a custom map with random positions for player, key, and door.
+        /// Initializes a custom map with _random positions for _player, _key, and _door.
         /// </summary>
         public static void Initialize()
         {
-            mapChars = new char[mapSize.width, mapSize.height];
+            _mapChars = new char[_mapSize.Width, _mapSize.Height];
 
             Player player = SpriteManager.GetPlayer();
             Sprite key = SpriteManager.GetKey();
@@ -247,42 +247,42 @@ namespace Escape_Room
 
             player.SetPosition(new Vector2
             {
-                x = (int)random.NextInt64(2, mapSize.width - 2),
-                y = (int)random.NextInt64(2, mapSize.height - 2)
+                X = (int)_random.NextInt64(2, _mapSize.Width - 2),
+                Y = (int)_random.NextInt64(2, _mapSize.Height - 2)
             });
 
             key.SetPosition(new Vector2
             {
-                x = (int)random.NextInt64(2, mapSize.width - 2),
-                y = (int)random.NextInt64(2, mapSize.height - 2)
+                X = (int)_random.NextInt64(2, _mapSize.Width - 2),
+                Y = (int)_random.NextInt64(2, _mapSize.Height - 2)
             });
 
             door.SetPosition(GetPossibleDoorPosition());
 
-            for (int y = 0; y < mapSize.height; y++)
+            for (int y = 0; y < _mapSize.Height; y++)
             {
-                for (int x = 0; x < mapSize.width; x++)
+                for (int x = 0; x < _mapSize.Width; x++)
                 {
-                    if ((y == 0 || y == mapSize.height - 1 || x == 0 || x == mapSize.width - 1) &&
-                        (x, y) != (door.GetPosition().x, door.GetPosition().y))
+                    if ((y == 0 || y == _mapSize.Height - 1 || x == 0 || x == _mapSize.Width - 1) &&
+                        (x, y) != (door.GetPosition().X, door.GetPosition().Y))
                     {
-                        mapChars[x, y] = SpriteManager.WallLabel;
+                        _mapChars[x, y] = SpriteManager.WallLabel;
                     }
-                    else if ((x, y) == (player.GetPosition().x, player.GetPosition().y))
+                    else if ((x, y) == (player.GetPosition().X, player.GetPosition().Y))
                     {
-                        mapChars[x, y] = SpriteManager.PlayerLabel;
+                        _mapChars[x, y] = SpriteManager.PlayerLabel;
                     }
-                    else if ((x, y) == (key.GetPosition().x, key.GetPosition().y))
+                    else if ((x, y) == (key.GetPosition().X, key.GetPosition().Y))
                     {
-                        mapChars[x, y] = SpriteManager.KeyLabel;
+                        _mapChars[x, y] = SpriteManager.KeyLabel;
                     }
-                    else if ((x, y) == (door.GetPosition().x, door.GetPosition().y))
+                    else if ((x, y) == (door.GetPosition().X, door.GetPosition().Y))
                     {
-                        mapChars[x, y] = SpriteManager.DoorLabel;
+                        _mapChars[x, y] = SpriteManager.DoorLabel;
                     }
                     else
                     {
-                        mapChars[x, y] = SpriteManager.GroundLabel;
+                        _mapChars[x, y] = SpriteManager.GroundLabel;
                     }
                 }
             }
@@ -297,11 +297,11 @@ namespace Escape_Room
             Size mapSize = GetSize();
             Sprite sprite;
 
-            for (int y = 0; y < mapSize.height; y++)
+            for (int y = 0; y < mapSize.Height; y++)
             {
-                for (int x = 0; x < mapSize.width; x++)
+                for (int x = 0; x < mapSize.Width; x++)
                 {
-                    sprite = SpriteManager.GetSpriteFromChar(mapChars[x, y]);
+                    sprite = SpriteManager.GetSpriteFromChar(_mapChars[x, y]);
                     sprite.Draw();
                 }
                 Console.Write("\n");

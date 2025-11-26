@@ -84,9 +84,9 @@ Below is an overview of the main components of the codebase:
 | **Geometry & Position** | `Vector2.cs`, `Size.cs`                                                                      | Core math structs.                           | `Vector2` is a simple integer vector with addition overloads. `Size` stores map width & height.                                                                    |
 | **Input**               | `InputManager.cs`                                                                            | Converts keyboard input to movement vectors. | Maps `ConsoleKey` to direction `Vector2` values, respecting console coordinate orientation.                                                                        |
 | **Console Graphics**    | `GUIManager.cs`, `ConsolePrinter.cs`                                                         | Handles GUI/HUD rendering.                   | `GUIManager` draws dialogs, info boards & end screens. `ConsolePrinter` formats output with colors based on print level.                                           |
-| **Print Formatting**    | `E_PrintLevel.cs`, `ColorFormat.cs`, `PrintLevelFormat.cs`                                   | Structured message formatting.               | Defines priority categories (Error, Dialog, Infoboard) and maps them to color schemes.                                                                             |
-| **Audio System**        | `SoundPlayer.cs`, `E_Sound.cs`, `SoundIntervalCollection.cs`, `Sound.cs`, `SoundInterval.cs` | Plays adjustable beep sequences.             | Uses collections of `Sound` structs (frequency + duration) to form sequences, which `SoundPlayer` executes.                                                        |
-| **Gamemode Info**       | `E_GamemodeType.cs`, `GamemodeInfo.cs`, `GamemodeExtensions.cs`                              | Defines gamemodes & metadata.                | Maps gamemode types to readable names and descriptions.                                                                                                            |
+| **Print Formatting**    | `PrintLevel.cs`, `ColorFormat.cs`, `PrintLevelFormat.cs`                                   | Structured message formatting.               | Defines priority categories (Error, Dialog, Infoboard) and maps them to color schemes.                                                                             |
+| **Audio System**        | `SoundPlayer.cs`, `Sound.cs`, `SoundIntervalCollection.cs`, `Sound.cs`, `SoundInterval.cs` | Plays adjustable beep sequences.             | Uses collections of `Sound` structs (frequency + duration) to form sequences, which `SoundPlayer` executes.                                                        |
+| **Gamemode Info**       | `GamemodeType.cs`, `GamemodeInfo.cs`, `GamemodeExtensions.cs`                              | Defines gamemodes & metadata.                | Maps gamemode types to readable names and descriptions.                                                                                                            |
 | **Utility Functions**   | `LogicLib.cs`                                                                                | Misc helpers.                                | Includes `IsNumeral`, numeric range validation, and other general helpers.                                                                                         |
 
 ---
@@ -96,7 +96,7 @@ Below is an overview of the main components of the codebase:
 ### **Tile-Based Rendering**
 
 * The `Map` stores a 2D character array.
-* On each frame, the renderer queries `SpriteManager` for the correct sprite based on the character label.
+* On each frame, the renderer queries `SpriteManager` for the correct sprite based on the character Label.
 * Console is redrawn using color-coded `ConsolePrinter` output.
 
 ### **Sprite System**

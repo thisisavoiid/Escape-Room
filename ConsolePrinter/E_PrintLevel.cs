@@ -9,7 +9,7 @@ namespace Escape_Room
     /// <summary>
     /// Defines the different levels of printed messages used by the game.
     /// </summary>
-    public enum E_PrintLevel
+    public enum PrintLevel
     {
         /// <summary>
         /// Represents an error message.

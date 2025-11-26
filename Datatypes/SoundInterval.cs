@@ -14,6 +14,6 @@ namespace Escape_Room
         /// <summary>
         /// Array of <see cref="Sound"/> objects defining the frequency and duration of each sound in the interval.
         /// </summary>
-        public Sound[] sounds;
+        public Sound[] Sounds;
     }
 }

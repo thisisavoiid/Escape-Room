@@ -12,27 +12,27 @@ namespace Escape_Room
     public class GamemodeExtensions
     {
         /// <summary>
-        /// Maps each <see cref="E_GamemodeType"/> to its corresponding <see cref="GamemodeInfo"/>,
+        /// Maps each <see cref="GamemodeType"/> to its corresponding <see cref="GamemodeInfo"/>,
         /// containing the display name and description for the mode.
         /// </summary>
-        public static readonly IReadOnlyDictionary<E_GamemodeType, GamemodeInfo> InfoMap =
-            new Dictionary<E_GamemodeType, GamemodeInfo>()
+        public static readonly IReadOnlyDictionary<GamemodeType, GamemodeInfo> InfoMap =
+            new Dictionary<GamemodeType, GamemodeInfo>()
         {
             {
-                E_GamemodeType.LevelBasedMode,
+                GamemodeType.LevelBasedMode,
                 new GamemodeInfo()
                 {
-                    displayName = "Level-Based Mode",
-                    displayDescription =
+                    DisplayName = "Level-Based Mode",
+                    DisplayDescription =
                         "Play through a series of preset escape rooms with increasing difficulty."
                 }
             },
             {
-                E_GamemodeType.CustomLevelMode,
+                GamemodeType.CustomLevelMode,
                 new GamemodeInfo()
                 {
-                    displayName = "Custom Level Mode",
-                    displayDescription =
+                    DisplayName = "Custom Level Mode",
+                    DisplayDescription =
                         "Create a custom room by choosing your own map size."
                 }
             }

@@ -6,11 +6,11 @@ namespace Escape_Room
 {
     public class SpriteManager
     {
-        private static Player player;
-        private static Sprite ground;
-        private static Sprite wall;
-        private static Sprite key;
-        private static Sprite door;
+        private static Player _player;
+        private static Sprite _ground;
+        private static Sprite _wall;
+        private static Sprite _key;
+        private static Sprite _door;
 
         public const char KeyLabel = 'K';
         public const char DoorLabel = 'D';
@@ -23,11 +23,11 @@ namespace Escape_Room
         /// </summary>
         public static void CreateAllGameSprites()
         {
-            ground = new Sprite(' ', GroundLabel, ConsoleColor.White, ConsoleColor.Gray);
-            wall = new Sprite(' ', WallLabel, ConsoleColor.White, ConsoleColor.DarkGray);
-            key = new Sprite(' ', KeyLabel, ConsoleColor.White, ConsoleColor.Yellow);
-            door = new Sprite(' ', DoorLabel, ConsoleColor.White, ConsoleColor.Magenta);
-            player = new Player(' ', PlayerLabel, ConsoleColor.White, ConsoleColor.Blue);
+            _ground = new Sprite(' ', GroundLabel, ConsoleColor.White, ConsoleColor.Gray);
+            _wall = new Sprite(' ', WallLabel, ConsoleColor.White, ConsoleColor.DarkGray);
+            _key = new Sprite(' ', KeyLabel, ConsoleColor.White, ConsoleColor.Yellow);
+            _door = new Sprite(' ', DoorLabel, ConsoleColor.White, ConsoleColor.Magenta);
+            _player = new Player(' ', PlayerLabel, ConsoleColor.White, ConsoleColor.Blue);
         }
 
         private static Dictionary<char, Sprite> _spriteKeyPairs => new()
@@ -50,28 +50,28 @@ namespace Escape_Room
         }
 
         /// <returns>
-        /// The player <see cref="Sprite"/> instance.
+        /// The _player <see cref="Sprite"/> instance.
         /// </returns>
-        public static Player GetPlayer() => player;
+        public static Player GetPlayer() => _player;
 
         /// <returns>
-        /// The ground <see cref="Sprite"/> instance.
+        /// The _ground <see cref="Sprite"/> instance.
         /// </returns>
-        public static Sprite GetGround() => ground;
+        public static Sprite GetGround() => _ground;
 
         /// <returns>
-        /// The wall <see cref="Sprite"/> instance.
+        /// The _wall <see cref="Sprite"/> instance.
         /// </returns>
-        public static Sprite GetWall() => wall;
+        public static Sprite GetWall() => _wall;
 
         /// <returns>
-        /// The key <see cref="Sprite"/> instance.
+        /// The _key <see cref="Sprite"/> instance.
         /// </returns>
-        public static Sprite GetKey() => key;
+        public static Sprite GetKey() => _key;
 
         /// <returns>
-        /// The door <see cref="Sprite"/> instance.
+        /// The _door <see cref="Sprite"/> instance.
         /// </returns>
-        public static Sprite GetDoor() => door;
+        public static Sprite GetDoor() => _door;
     }
 }

@@ -14,11 +14,11 @@ namespace Escape_Room
         /// <summary>
         /// Frequency of the sound in Hertz.
         /// </summary>
-        public int frequency;
+        public int Frequency;
 
         /// <summary>
         /// Duration of the sound in milliseconds.
         /// </summary>
-        public int duration;
+        public int Duration;
     }
 }

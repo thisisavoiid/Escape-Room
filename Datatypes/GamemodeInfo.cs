@@ -15,11 +15,11 @@ namespace Escape_Room
         /// <summary>
         /// The display name of the game mode.
         /// </summary>
-        public string displayName;
+        public string DisplayName;
 
         /// <summary>
         /// A brief description of the game mode.
         /// </summary>
-        public string displayDescription;
+        public string DisplayDescription;
     }
 }

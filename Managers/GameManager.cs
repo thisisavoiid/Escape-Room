@@ -10,13 +10,13 @@ namespace Escape_Room
 {
     public class GameManager
     {
-        private static Size _maxMapSize = new Size { width = 20, height = 20 };
-        private static Size _minMapSize = new Size { width = 10, height = 10 };
-        private static E_GamemodeType _selectedGameMode;
+        private static Size _maxMapSize = new Size { Width = 20, Height = 20 };
+        private static Size _minMapSize = new Size { Width = 10, Height = 10 };
+        private static GamemodeType _selectedGameMode;
         
         private static bool _isGameFinished = false;
-        public static bool hasPlayerFoundKeyInCurrentLevel { get; private set; } = false;
-        public static Stopwatch stopwatch { get; private set; } = new Stopwatch();
+        public static bool HasPlayerFoundKeyInCurrentLevel { get; private set; } = false;
+        public static Stopwatch Stopwatch { get; private set; } = new Stopwatch();
 
         private static int _currentLevel = 0;
         private static int _levelCount = 0;
@@ -24,7 +24,7 @@ namespace Escape_Room
         private static Player _player = SpriteManager.GetPlayer();
 
         /// <summary>
-        /// Handles the flow for setting up a custom level, allowing the player to select map dimensions.
+        /// Handles the flow for setting up a custom level, allowing the _player to select map dimensions.
         /// </summary>
         private static void StartCustomLevelSetupFlow()
         {
@@ -42,7 +42,7 @@ namespace Escape_Room
                 GUIManager.ClearConsole(false);
 
                 ConsolePrinter.Print(
-                    E_PrintLevel.Infoboard,
+                    PrintLevel.Infoboard,
                     "Enter your desired map " + (selectionFlowSection == 0 ? "width" : "height") + ":"
                 );
 
@@ -50,9 +50,9 @@ namespace Escape_Room
 
                 if (!LogicLib.IsNumeral(input))
                 {
-                    SoundPlayer.Play(E_Sound.InvalidInput);
+                    SoundPlayer.Play(SoundType.InvalidInput);
                     ConsolePrinter.Print(
-                        E_PrintLevel.Error,
+                        PrintLevel.Error,
                         $"Invalid input. Please enter a valid number for the map {(selectionFlowSection == 0 ? "width" : "height")}.",
                         2000
                     );
@@ -66,39 +66,39 @@ namespace Escape_Room
                 {
                     case 0:
                         {
-                            if (!LogicLib.IsInRange(inputToInteger, _minMapSize.width, _maxMapSize.width))
+                            if (!LogicLib.IsInRange(inputToInteger, _minMapSize.Width, _maxMapSize.Width))
                             {
-                                SoundPlayer.Play(E_Sound.InvalidInput);
+                                SoundPlayer.Play(SoundType.InvalidInput);
                                 ConsolePrinter.Print(
-                                    E_PrintLevel.Error,
-                                    $"The number you entered is outside the valid range ({_minMapSize.width}–{_maxMapSize.width}).",
+                                    PrintLevel.Error,
+                                    $"The number you entered is outside the valid range ({_minMapSize.Width}–{_maxMapSize.Width}).",
                                     2000
                                 );
                                 
                                 continue;
                             }
 
-                            SoundPlayer.Play(E_Sound.ValidInput);
-                            desiredMapSize.width = inputToInteger+2;
+                            SoundPlayer.Play(SoundType.ValidInput);
+                            desiredMapSize.Width = inputToInteger+2;
                             selectionFlowSection++;
                             break;
                         }
                     case 1:
                         {
-                            if (!LogicLib.IsInRange(inputToInteger, _minMapSize.height, _maxMapSize.height))
+                            if (!LogicLib.IsInRange(inputToInteger, _minMapSize.Height, _maxMapSize.Height))
                             {
-                                SoundPlayer.Play(E_Sound.InvalidInput);
+                                SoundPlayer.Play(SoundType.InvalidInput);
                                 ConsolePrinter.Print(
-                                    E_PrintLevel.Error,
-                                    $"The number you entered is outside the valid range ({_minMapSize.height}–{_maxMapSize.height}).",
+                                    PrintLevel.Error,
+                                    $"The number you entered is outside the valid range ({_minMapSize.Height}–{_maxMapSize.Height}).",
                                     2000
                                 );
                                 
                                 continue;
                             }
 
-                            SoundPlayer.Play(E_Sound.ValidInput);
-                            desiredMapSize.height = inputToInteger+2;
+                            SoundPlayer.Play(SoundType.ValidInput);
+                            desiredMapSize.Height = inputToInteger+2;
                             selectionFlowSection++;
                             hasMapSizeSelectionFlowFinished = true;
                             break;
@@ -110,22 +110,22 @@ namespace Escape_Room
         }
 
         /// <summary>
-        /// Starts the game mode selection flow, allowing the player to choose between predefined or custom levels.
+        /// Starts the game mode selection flow, allowing the _player to choose between predefined or custom levels.
         /// Initializes the selected mode and begins the game loop.
         /// </summary>
         public static void StartGameSelectionFlow()
         {
 
-            for (int i = 0; i < typeof(E_GamemodeType).GetEnumValues().Length; i++)
+            for (int i = 0; i < typeof(GamemodeType).GetEnumValues().Length; i++)
             {
                 ConsolePrinter.Print(
-                    E_PrintLevel.Dialog,
-                    $"[{i + 1}] {GamemodeExtensions.InfoMap[(E_GamemodeType)i].displayName}\n{GamemodeExtensions.InfoMap[(E_GamemodeType)i].displayDescription}\n"
+                    PrintLevel.Dialog,
+                    $"[{i + 1}] {GamemodeExtensions.InfoMap[(GamemodeType)i].DisplayName}\n{GamemodeExtensions.InfoMap[(GamemodeType)i].DisplayDescription}\n"
                 );
             }
 
             ConsolePrinter.Print(
-                E_PrintLevel.Warning,
+                PrintLevel.Warning,
                 "Press a number to select the game mode..."
             );
 
@@ -138,21 +138,21 @@ namespace Escape_Room
                 
                 if (LogicLib.IsNumeral(inputChar.ToString()))
                 {
-                    if (LogicLib.IsInRange(int.Parse(inputChar.ToString()), 1, typeof(E_GamemodeType).GetEnumNames().Count()))
+                    if (LogicLib.IsInRange(int.Parse(inputChar.ToString()), 1, typeof(GamemodeType).GetEnumNames().Count()))
                     {
                         selectedGameModeIndex = int.Parse(inputChar.ToString()) - 1;
-                        SoundPlayer.Play(E_Sound.ValidInput);
+                        SoundPlayer.Play(SoundType.ValidInput);
                         break;
                     }
                 }
-                SoundPlayer.Play(E_Sound.InvalidInput);
+                SoundPlayer.Play(SoundType.InvalidInput);
             }
 
-            _selectedGameMode = (E_GamemodeType)selectedGameModeIndex;
+            _selectedGameMode = (GamemodeType)selectedGameModeIndex;
 
             switch (_selectedGameMode)
             {
-                case E_GamemodeType.LevelBasedMode:
+                case GamemodeType.LevelBasedMode:
                     {
                         _levelCount = Map.GetPremadeLevelCount();
                         Map.LoadLevelMap(1);
@@ -160,7 +160,7 @@ namespace Escape_Room
                         break;
                     }
 
-                case E_GamemodeType.CustomLevelMode:
+                case GamemodeType.CustomLevelMode:
                     {
                         _levelCount = 1;
                         _currentLevel = 1;
@@ -174,7 +174,7 @@ namespace Escape_Room
             Console.CursorVisible = false;
             Map.Print();
 
-            stopwatch.Start();
+            Stopwatch.Start();
 
             StartGameLoop();
         }
@@ -197,7 +197,7 @@ namespace Escape_Room
         }
 
         /// <summary>
-        /// Starts the main game loop, continuously handling player movement and updating the GUI.
+        /// Starts the main game loop, continuously handling _player movement and updating the GUI.
         /// </summary>
         public static void StartGameLoop()
         {
@@ -215,18 +215,16 @@ namespace Escape_Room
         /// </summary>
         private static void StartEndGameFlow()
         {
-            stopwatch.Stop();
+            Stopwatch.Stop();
             Map.UpdateSprite(_player.GetPosition(), SpriteManager.GetGround());
             _isGameFinished = true;
             _player.DisableMovement();
-            SoundPlayer.Play(E_Sound.GameFinished);
+            SoundPlayer.Play(SoundType.GameFinished);
             GUIManager.ClearConsole(true, true);
 
-            SoundPlayer.Play(E_Sound.EndScreen);
+            SoundPlayer.Play(SoundType.EndScreen);
 
             GUIManager.DrawEndScreen();
-
-            
         }
 
         /// <summary>
@@ -244,7 +242,7 @@ namespace Escape_Room
                 }
 
                 _player.DisableMovement();
-                SoundPlayer.Play(E_Sound.LevelFinished);
+                SoundPlayer.Play(SoundType.LevelFinished);
                 _isGameFinished = true;
                 _currentLevel++;
 
@@ -261,13 +259,13 @@ namespace Escape_Room
         }
 
         /// <summary>
-        /// Marks the key in the current level as collected and updates the objective message.
+        /// Marks the _key in the current level as collected and updates the objective message.
         /// </summary>
         public static void CollectKeyInCurrentLevel()
         {
             Map.UpdateSprite(SpriteManager.GetDoor().GetPosition(), SpriteManager.GetGround());
             GUIManager.SetInfoDialogBar("Objective: The door has opened! Go through it!");
-            hasPlayerFoundKeyInCurrentLevel = true;
+            HasPlayerFoundKeyInCurrentLevel = true;
         }
 
         /// <summary>

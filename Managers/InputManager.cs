@@ -21,15 +21,15 @@ namespace Escape_Room
         };
         
         /// <summary>
-        /// Returns the next key pressed by the user.
+        /// Returns the next _key pressed by the user.
         /// </summary>
         public static ConsoleKey GetKeyPressed() => Console.ReadKey(true).Key;
 
         /// <summary>
-        /// Returns the movement vector associated with a given key.
-        /// Defaults to zero vector if key is not mapped.
+        /// Returns the movement vector associated with a given _key.
+        /// Defaults to zero vector if _key is not mapped.
         /// </summary>
-        /// <param name="key">The key to translate into a movement vector.</param>
+        /// <param name="key">The _key to translate into a movement vector.</param>
         public static Vector2 GetMoveDirection(ConsoleKey key) => _inputMap.GetValueOrDefault(key, Vector2.Zero());
     }
 }

@@ -12,8 +12,8 @@ namespace Escape_Room
     {
         private static string _infoDialogString = string.Empty;
 
-        // Builds the top line of the info board displaying current level and player steps
-        private static string BuildTopLine() => $"Level: {GameManager.GetCurrentLevel()} | Steps: {SpriteManager.GetPlayer().stepsDone}";
+        // Builds the top line of the info board displaying current level and _player steps
+        private static string BuildTopLine() => $"Level: {GameManager.GetCurrentLevel()} | Steps: {SpriteManager.GetPlayer().StepsDone}";
 
         // Builds the bottom line of the info board displaying the current info dialog text
         private static string BuildBottomLine() => $"{_infoDialogString}";
@@ -23,7 +23,7 @@ namespace Escape_Room
         /// </summary>
         private static void DrawInfoBoard()
         {
-            Console.SetCursorPosition(0, Map.GetSize().height + 1);
+            Console.SetCursorPosition(0, Map.GetSize().Height + 1);
             Console.WriteLine(BuildTopLine() + new string(' ', Console.BufferWidth - BuildTopLine().Length));
             Console.WriteLine(BuildBottomLine() + new string(' ', Console.BufferWidth - BuildBottomLine().Length));
         }
@@ -59,7 +59,7 @@ namespace Escape_Room
                     }
                 }
 
-                Console.SetCursorPosition(prevCursorPosition.x, prevCursorPosition.y);
+                Console.SetCursorPosition(prevCursorPosition.X, prevCursorPosition.Y);
             }
         }
 
@@ -78,20 +78,20 @@ namespace Escape_Room
             // Calculate the size of the logo
             Size logoSize = new Size()
             {
-                height = endLogoParts.Length,
-                width = endLogoParts[0].Length
+                Height = endLogoParts.Length,
+                Width = endLogoParts[0].Length
             };
 
             // Calculate starting position to center the logo on the console
             Vector2 startPos = new Vector2(
-                Console.BufferWidth / 2 - logoSize.width / 2,
-                Console.BufferHeight / 2 - logoSize.height / 2
+                Console.BufferWidth / 2 - logoSize.Width / 2,
+                Console.BufferHeight / 2 - logoSize.Height / 2
             );
 
             // Print each line of the ASCII logo at the calculated position
-            for (int y = 0; y < logoSize.height; y++)
+            for (int y = 0; y < logoSize.Height; y++)
             {
-                Console.SetCursorPosition(startPos.x, y + startPos.y);
+                Console.SetCursorPosition(startPos.X, y + startPos.Y);
                 Console.Write(endLogoParts[y]);
             }
 
@@ -100,15 +100,15 @@ namespace Escape_Room
 
             // Prepare the statistics strings to display
             string stepsTakenDisplay = $"Steps taken: " +
-                                       $"{SpriteManager.GetPlayer().stepsDone}";
+                                       $"{SpriteManager.GetPlayer().StepsDone}";
 
-            string timeTakenDisplay = $"Time spent: " +
-                                      $"{GameManager.stopwatch.Elapsed.Minutes.ToString("D2")}:" +
-                                      $"{GameManager.stopwatch.Elapsed.Seconds.ToString("D2")}:" +
-                                      $"{GameManager.stopwatch.Elapsed.Milliseconds.ToString("D2")}";
+            string timeSpentDisplay = $"Time spent: " +
+                                      $"{GameManager.Stopwatch.Elapsed.Minutes.ToString("D2")}:" +
+                                      $"{GameManager.Stopwatch.Elapsed.Seconds.ToString("D2")}:" +
+                                      $"{GameManager.Stopwatch.Elapsed.Milliseconds.ToString("D2")}";
 
             string longestDisplayPart = string.Empty;
-            string[] endScreenStatDisplayParts = { stepsTakenDisplay, timeTakenDisplay };
+            string[] endScreenStatDisplayParts = { stepsTakenDisplay, timeSpentDisplay };
 
             // Determine the longest string for proper centering
             for (int x = 0; x < endScreenStatDisplayParts.Length; x++)
@@ -128,7 +128,7 @@ namespace Escape_Room
             // Print the statistics centered below the logo
             for (int x = 0; x < endScreenStatDisplayParts.Length; x++)
             {
-                Console.SetCursorPosition(Console.BufferWidth / 2 - endScreenStatDisplayParts[x].Length / 2, posAfterCenterPrint.y + x + 1);
+                Console.SetCursorPosition(Console.BufferWidth / 2 - endScreenStatDisplayParts[x].Length / 2, posAfterCenterPrint.Y + x + 1);
                 Console.WriteLine(endScreenStatDisplayParts[x]);
             }
         }

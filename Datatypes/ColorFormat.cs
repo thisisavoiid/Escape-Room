@@ -15,11 +15,11 @@ namespace Escape_Room
         /// <summary>
         /// The color of the text itself.
         /// </summary>
-        public ConsoleColor foregroundColor;
+        public ConsoleColor ForegroundColor;
 
         /// <summary>
         /// The color of the text background.
         /// </summary>
-        public ConsoleColor backgroundColor;
+        public ConsoleColor BackgroundColor;
     }
 }
